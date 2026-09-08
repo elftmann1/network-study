@@ -1,0 +1,978 @@
+<title>Twelve Weeks to N10-009</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@600;800&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+
+<style>
+  :root {
+    --ground: #F1F5F7;
+    --surface: #FFFFFF;
+    --surface-2: #E8EEF2;
+    --ink: #101820;
+    --ink-2: #3A4854;
+    --muted: #5C6B79;
+    --line: #D3DDE4;
+    --line-2: #BDCAD3;
+    --accent: #0E7A80;
+    --accent-ink: #FFFFFF;
+    --d1: #2C5FA8;
+    --d2: #B85B10;
+    --d3: #0F8B8D;
+    --d4: #7E6207;
+    --d5: #8E3A63;
+    --shadow: 0 1px 2px rgba(16,24,32,.05), 0 8px 24px -16px rgba(16,24,32,.18);
+
+    --f-display: "Chivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body: "Source Sans 3", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1317;
+      --surface: #131D23;
+      --surface-2: #1A262D;
+      --ink: #E3EDF1;
+      --ink-2: #BACAD3;
+      --muted: #8CA0AC;
+      --line: #24333B;
+      --line-2: #32454F;
+      --accent: #3EBEC4;
+      --accent-ink: #06181A;
+      --d1: #6E9EDC;
+      --d2: #E08B45;
+      --d3: #3FBBBD;
+      --d4: #C4A233;
+      --d5: #CE7BA0;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0C1317;
+    --surface: #131D23;
+    --surface-2: #1A262D;
+    --ink: #E3EDF1;
+    --ink-2: #BACAD3;
+    --muted: #8CA0AC;
+    --line: #24333B;
+    --line-2: #32454F;
+    --accent: #3EBEC4;
+    --accent-ink: #06181A;
+    --d1: #6E9EDC;
+    --d2: #E08B45;
+    --d3: #3FBBBD;
+    --d4: #C4A233;
+    --d5: #CE7BA0;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- progress bar ---------- */
+  #bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar-in {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .bar-label {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .track {
+    flex: 1;
+    height: 5px;
+    background: var(--surface-2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width .28s ease;
+  }
+  .reset {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 3px 8px;
+    cursor: pointer;
+  }
+  .reset:hover { color: var(--ink); border-color: var(--line-2); }
+
+  /* ---------- header ---------- */
+  header.hero { padding: 64px 0 40px; }
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 3.9rem);
+    line-height: 1.02;
+    letter-spacing: -.025em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.14rem;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  .fact { background: var(--surface); padding: 16px 18px; }
+  .fact dt {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+  .fact dd {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.28rem;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.015em;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding-top: 64px; }
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 1.72rem;
+    letter-spacing: -.02em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+  .sec-note {
+    color: var(--muted);
+    max-width: 66ch;
+    margin: 0 0 32px;
+  }
+  p { max-width: 66ch; }
+  h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.06rem;
+    margin: 0 0 6px;
+    letter-spacing: -.01em;
+  }
+
+  /* ---------- rhythm table ---------- */
+  .rhythm-scroll { overflow-x: auto; }
+  table.rhythm {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  table.rhythm th {
+    text-align: left;
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.rhythm td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.rhythm tr:last-child td { border-bottom: none; }
+  table.rhythm tr:last-child { background: var(--surface-2); }
+  td.slot {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  td.hrs {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  td.act { color: var(--ink-2); }
+  td.act b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- toolkit ---------- */
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+    gap: 14px;
+  }
+  .tool {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .tool .tag {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .tool p { font-size: .93rem; color: var(--muted); margin: 0; max-width: none; }
+
+  /* ---------- week cards ---------- */
+  .weeks { display: flex; flex-direction: column; gap: 16px; }
+
+  details.week {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  details.week[open] { border-color: var(--line-2); }
+  summary {
+    display: grid;
+    grid-template-columns: 62px 1fr auto;
+    gap: 18px;
+    align-items: baseline;
+    padding: 18px 20px;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .wk-num {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .wk-title {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.14rem;
+    letter-spacing: -.012em;
+    color: var(--ink);
+  }
+  .wk-sub {
+    display: block;
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: .9rem;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .wk-right { display: flex; align-items: center; gap: 10px; }
+  .chips { display: flex; gap: 4px; }
+  .chip {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--accent-ink);
+    line-height: 1.5;
+  }
+  .chip.d1 { background: var(--d1); }
+  .chip.d2 { background: var(--d2); }
+  .chip.d3 { background: var(--d3); }
+  .chip.d4 { background: var(--d4); }
+  .chip.d5 { background: var(--d5); }
+  .wk-count {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .wk-body {
+    padding: 4px 20px 22px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 32px;
+  }
+  @media (max-width: 720px) {
+    .wk-body { grid-template-columns: 1fr; }
+    summary { grid-template-columns: 1fr; gap: 8px; }
+    .wk-right { justify-content: flex-start; }
+  }
+  .col-head {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 18px 0 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 10px;
+  }
+  .wk-body ul { list-style: none; margin: 0; padding: 0; }
+  .wk-body li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 5px 0;
+    font-size: .95rem;
+    line-height: 1.5;
+  }
+  .wk-body input[type="checkbox"] {
+    margin: 4px 0 0;
+    flex: 0 0 auto;
+    accent-color: var(--accent);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+  .wk-body label { cursor: pointer; color: var(--ink-2); }
+  .wk-body label.done { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .obj {
+    font-family: var(--f-mono);
+    font-size: .82rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .why {
+    grid-column: 1 / -1;
+    margin: 20px 0 0;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    font-size: .92rem;
+    color: var(--ink-2);
+    max-width: none;
+  }
+  .why b {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- legend ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 0 0 28px;
+    padding: 0;
+    list-style: none;
+  }
+  .legend li {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto; }
+
+  /* ---------- callout ---------- */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--d2);
+    border-radius: 0 6px 6px 0;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+  }
+  .callout h3 { margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  footer {
+    padding-top: 64px;
+    color: var(--muted);
+    font-size: .88rem;
+  }
+  footer a { color: var(--muted); }
+  footer p { max-width: 70ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div id="bar">
+  <div class="bar-in">
+    <span class="bar-label" id="pct">0% complete · 0 of 0</span>
+    <span class="track"><span class="fill" id="fill"></span></span>
+    <button class="reset" id="reset" type="button">Reset</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">CompTIA Network+ · Professor Messer track</p>
+    <h1>Twelve Weeks to N10-009</h1>
+    <p class="standfirst">All 87 Professor Messer videos, split into eleven study weeks plus an exam week — with the lab or drill that belongs beside each one. Built for ten hours a week, no prior networking experience, and free tools only.</p>
+
+    <dl class="facts">
+      <div class="fact"><dt>Study weeks</dt><dd>11 + exam</dd></div>
+      <div class="fact"><dt>Weekly budget</dt><dd>10 hours</dd></div>
+      <div class="fact"><dt>Exam length</dt><dd>90 min</dd></div>
+      <div class="fact"><dt>Questions</dt><dd>90 max</dd></div>
+      <div class="fact"><dt>Passing score</dt><dd>720 / 900</dd></div>
+    </dl>
+  </header>
+
+  <section id="rhythm">
+    <h2>The weekly rhythm</h2>
+    <p class="sec-note">This is the actual answer to your question. Labs are not a separate activity you bolt on at the end — they belong in the same week as the videos they apply to, and quizzing belongs one week <em>behind</em> the videos, so you're recalling from memory rather than from short-term echo.</p>
+
+    <div class="rhythm-scroll">
+      <table class="rhythm">
+        <thead>
+          <tr><th>Slot</th><th>Time</th><th>What you do</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="slot">Sessions 1–3</td>
+            <td class="hrs">4.5 hrs</td>
+            <td class="act"><b>Watch this week's videos.</b> Pause and write your own notes by hand — not a transcript, just what you'd need to re-explain it. Don't watch at 2×; you're a beginner, and the vocabulary is the hard part.</td>
+          </tr>
+          <tr>
+            <td class="slot">Session 4</td>
+            <td class="hrs">2.5 hrs</td>
+            <td class="act"><b>Lab this week's material.</b> Same week, while the vocabulary is fresh. Build it, break it, watch it fail, fix it. If a lab works on the first try you learned less than if it didn't.</td>
+          </tr>
+          <tr>
+            <td class="slot">Session 5</td>
+            <td class="hrs">1.5 hrs</td>
+            <td class="act"><b>Retrieval on </b><b>last</b><b> week's topics.</b> Flashcards, closed-notes questions, or explain it out loud. Feeling like you've forgotten it is the point — that's the reps that stick.</td>
+          </tr>
+          <tr>
+            <td class="slot">Session 6</td>
+            <td class="hrs">1 hr</td>
+            <td class="act"><b>Weak spots + ports drill.</b> Re-watch the one video that didn't land. Run your ports deck. Do the day's Professor Messer pop quiz.</td>
+          </tr>
+          <tr>
+            <td class="slot">Every session</td>
+            <td class="hrs">0.5 hr</td>
+            <td class="act"><b>Warm-up: five subnetting problems and one ports round.</b> From week 3 onward, every single session, no exceptions. These two topics are pure speed and they carry disproportionate weight on the exam.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="toolkit">
+    <h2>Your free toolkit</h2>
+    <p class="sec-note">Set all of this up in week 1 so tooling never becomes the reason you skip a lab.</p>
+    <div class="tools">
+      <div class="tool">
+        <span class="tag">Primary lab</span>
+        <h3>Cisco Packet Tracer</h3>
+        <p>Free with a Cisco Networking Academy account. Simulates switches, routers, servers, and wireless controllers. This carries roughly 80% of your labs and is the best free rehearsal for the exam's performance-based questions.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Packet inspection</span>
+        <h3>Wireshark</h3>
+        <p>Free. Lets you see the frames and headers Messer draws on screen actually arriving on your own machine. Turns the OSI model from a mnemonic into something observable.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Command line</span>
+        <h3>A Linux VM</h3>
+        <p>VirtualBox plus any Ubuntu ISO, both free. Objective 5.5 expects <span class="obj">dig</span>, <span class="obj">tcpdump</span>, <span class="obj">ip</span>, and <span class="obj">netstat</span> — you want somewhere to actually run them.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Retrieval</span>
+        <h3>Anki</h3>
+        <p>Free on desktop. Build your own ports, connectors, and protocols decks rather than downloading one — writing the card is half the learning, and shared decks are often built for the older N10-008 objectives.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Questions</span>
+        <h3>Messer pop quizzes &amp; study groups</h3>
+        <p>Free on professormesser.com. Daily N10-009 pop quizzes plus monthly live study groups with replays. The closest free thing to exam-style questions written for this exact objective set.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Questions</span>
+        <h3>CompTIA's sample questions</h3>
+        <p>Free on comptia.org. A small set, but written by the people who write the exam — useful mainly for calibrating how questions are phrased.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Hardware</span>
+        <h3>Your own home network</h3>
+        <p>Free, and underrated. Log into your router. Read its DHCP pool, its NAT table, its wireless channel. Objectives 1.5, 2.3, and 3.4 are all sitting in that admin page.</p>
+      </div>
+      <div class="tool">
+        <span class="tag">Hardware</span>
+        <h3>A WiFi analyzer app</h3>
+        <p>Free on Android; iOS options are more limited. Walk your home doing a channel survey — it makes objective 5.4's wireless interference troubleshooting concrete instead of abstract.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <h2>The eleven study weeks</h2>
+    <p class="sec-note">The video order follows Messer's course, which follows the objectives — with three deliberate departures, each explained in the week where it happens. Check items off as you go; your progress saves in this browser.</p>
+
+    <ul class="legend">
+      <li><span class="dot" style="background:var(--d1)"></span>1.0 Concepts · 23%</li>
+      <li><span class="dot" style="background:var(--d2)"></span>2.0 Implementation · 20%</li>
+      <li><span class="dot" style="background:var(--d3)"></span>3.0 Operations · 19%</li>
+      <li><span class="dot" style="background:var(--d4)"></span>4.0 Security · 14%</li>
+      <li><span class="dot" style="background:var(--d5)"></span>5.0 Troubleshooting · 24%</li>
+    </ul>
+
+    <div class="weeks" id="weeks"></div>
+  </section>
+
+  <section id="honesty">
+    <h2>Where a free-only plan is weakest</h2>
+    <div class="callout">
+      <h3>Practice exams</h3>
+      <p>Everything else in this plan is genuinely well covered by free tools. Full-length, well-written N10-009 practice exams are the exception. Most free question banks online were written for the retired N10-008 objectives, and a fair number are scraped exam content — using those violates CompTIA's candidate agreement and can get a certification revoked, so avoid anything advertising "real exam questions" or "dumps."</p>
+      <p>What free material actually gives you is question <em>practice</em>, not scored <em>simulations</em>: Messer's pop quizzes and study groups, CompTIA's sample set, and your own closed-book self-testing. That's enough to learn the material. It's thinner for calibrating whether you're ready.</p>
+      <p>So if you ever decide to spend anything at all on this, one legitimate practice-exam set is the highest-value purchase available — higher than any book or video course, because you already have those for free. Buy it around week 8, when you have enough breadth for the score to mean something. Skipping it isn't a dealbreaker; it just means leaning harder on the week 11 break-and-fix labs to judge your own readiness.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Video titles, section numbers, and runtimes are from <a href="https://www.professormesser.com/network-plus/n10-009/n10-009-video/n10-009-training-course/">Professor Messer's free N10-009 course index</a> (87 videos, 12 hours 55 minutes total). Exam format, domain weights, and passing score are from <a href="https://www.comptia.org/en-us/certifications/network/">CompTIA's Network+ certification page</a>. N10-009 launched June 2024 and CompTIA typically retires an exam version about three years after launch, so confirm the current version before you book.</p>
+  </footer>
+
+</div>
+
+<script>
+const WEEKS = [
+  {
+    n: 1, t: "Foundations and tool setup", s: "6 videos · 59m", d: [1],
+    watch: [
+      ["0.1", "How to Pass Your N10-009 Network+ Exam"],
+      ["1.1", "Understanding the OSI Model"],
+      ["1.2", "Networking Devices"],
+      ["1.2", "Networking Functions"],
+      ["1.6", "Network Topologies"],
+      ["1.6", "Network Architectures"]
+    ],
+    do: [
+      "Install Packet Tracer, Wireshark, VirtualBox + Ubuntu, and Anki",
+      "Packet Tracer: two PCs and one switch, assign IPs, get a successful ping",
+      "Wireshark: capture that ping and name the layer each header belongs to",
+      "Draw your own home network as a topology diagram, by hand",
+      "Write the OSI layers from memory, seven days running"
+    ],
+    why: ["Why topologies moved up", "Messer covers 1.6 after cabling and subnetting, but topologies are really just a second pass on 1.2's devices. Pairing them makes both stick, and week 1 needs a light video load anyway because tool installation eats real time."]
+  },
+  {
+    n: 2, t: "Addressing and ports", s: "6 videos · 1h 7m", d: [1],
+    watch: [
+      ["1.4", "Introduction to IP"],
+      ["1.4", "Common Ports"],
+      ["1.4", "Other Useful Protocols"],
+      ["1.4", "Network Communication"],
+      ["1.7", "Binary Math"],
+      ["1.7", "IPv4 Addressing"]
+    ],
+    do: [
+      "Build your ports Anki deck: number → service, and service → number, both directions",
+      "Packet Tracer: static IPs on three hosts, then break one on purpose and watch what fails",
+      "On your own machine: ipconfig/ip addr, arp -a, netstat -an — read the output line by line",
+      "Convert 20 decimal octets to binary and back, no calculator",
+      "Identify which RFC 1918 private range your home network uses and why"
+    ],
+    why: ["Start the ports deck now", "Ports are the single largest pure-memorization block on the exam and the one thing that rewards drilling from day one. Ten weeks of two-minute daily reps beats a panicked cram in week 12."]
+  },
+  {
+    n: 3, t: "Subnetting, part one", s: "3 videos · 30m", d: [1],
+    watch: [
+      ["1.7", "Classful Subnetting"],
+      ["1.7", "IPv4 Subnet Masks"],
+      ["1.7", "Calculating IPv4 Subnets and Hosts"]
+    ],
+    do: [
+      "Work every example in the videos yourself before watching the answer",
+      "Build a CIDR reference table by hand: /8 through /30, mask, hosts, block size",
+      "40 problems: given IP and mask, find network address, broadcast, and usable range",
+      "20 problems: given a host count, choose the smallest sufficient mask",
+      "Time yourself — record your average seconds per problem"
+    ],
+    why: ["Only 30 minutes of video, a full week of work", "This is the biggest video-time to study-time mismatch in the whole course. Subnetting is a motor skill, not a fact, and it underpins objectives 2.1, 3.4, and 5.3. Do not compress this week. If you finish early, do more problems."]
+  },
+  {
+    n: 4, t: "Subnetting speed and IPv6", s: "4 videos · 57m", d: [1, 3],
+    watch: [
+      ["1.7", "Magic Number Subnetting"],
+      ["1.7", "Seven Second Subnetting"],
+      ["1.8", "IPv6 Addressing"],
+      ["3.4", "IPv6 and SLAAC"]
+    ],
+    do: [
+      "Pick one shortcut method — magic number or seven-second — and commit to it",
+      "40 more problems using only that method; get under 30 seconds each",
+      "Packet Tracer: split a /24 into four subnets across two routers and make them route",
+      "Compress and expand 15 IPv6 addresses by hand",
+      "Enable IPv6 on a Packet Tracer host and watch SLAAC build its own address"
+    ],
+    why: ["Why IPv6's two videos are together", "3.4's SLAAC video sits in a different domain but is unintelligible without 1.8's addressing video. Watching them back to back saves you re-learning IPv6 notation twice."]
+  },
+  {
+    n: 5, t: "Cables, connectors, and the physical layer", s: "10 videos · 57m", d: [1, 2],
+    watch: [
+      ["1.5", "Wireless Networking"],
+      ["1.5", "Ethernet Standards"],
+      ["1.5", "Optical Fiber"],
+      ["1.5", "Copper Cabling"],
+      ["1.5", "Network Transceivers"],
+      ["1.5", "Fiber Connectors"],
+      ["1.5", "Copper Connectors"],
+      ["2.4", "Installing Networks"],
+      ["2.4", "Power"],
+      ["2.4", "Environmental Factors"]
+    ],
+    do: [
+      "Build an image-based Anki deck: LC, SC, ST, MPO, RJ11, RJ45, F-type, BNC, SFP, SFP+, QSFP, QSFP+",
+      "Table it out: cable category → max speed → max distance, Cat5 through Cat8",
+      "Packet Tracer: deliberately use the wrong cable type between devices and read the error",
+      "Find and physically examine every cable and connector in your house",
+      "Memorize the T568B pin colour order — say it out loud until it's automatic"
+    ],
+    why: ["A recognition week, not a reasoning week", "There is almost nothing to reason about here and a great deal to recognize on sight. Ten short videos, and the work is all flashcards and physical handling. Fiber connectors in particular show up as images on the exam."]
+  },
+  {
+    n: 6, t: "Routing and switching", s: "7 videos · 1h 5m", d: [2],
+    watch: [
+      ["2.1", "Static Routing"],
+      ["2.1", "Dynamic Routing"],
+      ["2.1", "Routing Technologies"],
+      ["2.1", "Network Address Translation"],
+      ["2.2", "VLANs and Trunking"],
+      ["2.2", "Interface Configurations"],
+      ["2.2", "Spanning Tree Protocol"]
+    ],
+    do: [
+      "Packet Tracer: three routers, static routes only, end-to-end ping",
+      "Same topology, delete the static routes and bring it up on OSPF instead",
+      "Build three VLANs, an 802.1Q trunk, and router-on-a-stick inter-VLAN routing",
+      "Configure NAT overload / PAT and watch the translation table populate",
+      "Cable a deliberate switch loop, then find which port STP put in blocking state",
+      "Read show ip route and show interface output until every column makes sense"
+    ],
+    why: ["The heaviest lab week — budget four hours, not two and a half", "This is where the exam's performance-based questions live. Borrow the extra time from session 6. Everything here is muscle memory you cannot get from watching."]
+  },
+  {
+    n: 7, t: "Wireless, cloud, and modern architecture", s: "10 videos · 1h 11m", d: [1, 2],
+    watch: [
+      ["2.3", "Wireless Technologies"],
+      ["2.3", "Wireless Networking"],
+      ["2.3", "Network Types"],
+      ["2.3", "Wireless Encryption"],
+      ["1.3", "Designing the Cloud"],
+      ["1.3", "Cloud Models"],
+      ["1.8", "Software Defined Networking"],
+      ["1.8", "Virtual Extensible LAN"],
+      ["1.8", "Zero Trust"],
+      ["1.8", "Infrastructure as Code"]
+    ],
+    do: [
+      "Packet Tracer: wireless LAN controller with two SSIDs on different VLANs",
+      "Run a channel survey of your home with a WiFi analyzer; find the overlapping channels",
+      "Log into your router: record its channel, width, band, and encryption mode",
+      "Table the 2.4 / 5 / 6 GHz bands: channels, width, range, and 802.11 standards",
+      "Write one sentence each distinguishing SaaS, PaaS, and IaaS — then check yourself"
+    ],
+    why: ["Why cloud and SDN are parked here", "Objectives 1.3 and 1.8 are the most abstract material in the course and the hardest to lab. Grouping them with wireless — which has a real hands-on lab — keeps the week from being six hours of pure vocabulary. Accept that these are flashcard topics."]
+  },
+  {
+    n: 8, t: "IP services and operations", s: "10 videos · 1h 29m", d: [3],
+    watch: [
+      ["3.4", "DHCP"],
+      ["3.4", "Configuring DHCP"],
+      ["3.4", "An Overview of DNS"],
+      ["3.4", "DNS Records"],
+      ["3.4", "Time Protocols"],
+      ["3.5", "VPNs"],
+      ["3.5", "Remote Access"],
+      ["3.1", "Network Documentation"],
+      ["3.1", "Life Cycle Management"],
+      ["3.1", "Configuration Management"]
+    ],
+    do: [
+      "First full practice exam — treat it as a diagnostic, not a verdict",
+      "Packet Tracer: DHCP server with a scope, a reservation, and DHCP relay across a router",
+      "Packet Tracer: DNS server with A, CNAME, and MX records; resolve names from a client",
+      "Run nslookup and dig against real domains; identify each record type in the output",
+      "Renew your own machine's DHCP lease while Wireshark captures the DORA exchange"
+    ],
+    why: ["Your first full-length practice exam", "Eight weeks in you finally have enough breadth for a score to mean something. Expect to fail it. The value is the wrong-answer list, which becomes your session 6 material for the rest of the plan."]
+  },
+  {
+    n: 9, t: "Monitoring, availability, and security concepts", s: "10 videos · 1h 29m", d: [3, 4],
+    watch: [
+      ["3.2", "SNMP"],
+      ["3.2", "Logs and Monitoring"],
+      ["3.2", "Network Solutions"],
+      ["3.3", "Disaster Recovery"],
+      ["3.3", "Network Redundancy"],
+      ["4.1", "Security Concepts"],
+      ["4.1", "Authentication"],
+      ["4.1", "Security Technologies"],
+      ["4.1", "Regulatory Compliance"],
+      ["4.1", "Segmentation Enforcement"]
+    ],
+    do: [
+      "Packet Tracer: point switches and routers at a syslog server, then read the log",
+      "Packet Tracer: FHRP with two routers, kill the active one, verify failover",
+      "Wireshark: write display filters for a single protocol, a single host, a single port",
+      "Memorize the RTO / RPO / MTTR / MTBF definitions — the exam tests these precisely",
+      "Table the authentication protocols: RADIUS, TACACS+, LDAP, SAML, Kerberos, 802.1X"
+    ],
+    why: ["Two domains, one theme", "Everything here is about knowing what your network is doing and who is allowed to do it. The acronym density is the highest in the course — this is a flashcards-and-tables week with two good labs attached."]
+  },
+  {
+    n: 10, t: "Attacks and security features", s: "9 videos · 1h 12m", d: [4],
+    watch: [
+      ["4.2", "Denial of Service"],
+      ["4.2", "VLAN Hopping"],
+      ["4.2", "MAC Flooding"],
+      ["4.2", "ARP and DNS Poisoning"],
+      ["4.2", "Rogue Services"],
+      ["4.2", "Social Engineering"],
+      ["4.2", "Malware"],
+      ["4.3", "Device Security"],
+      ["4.3", "Security Rules"]
+    ],
+    do: [
+      "Packet Tracer: write a standard and an extended ACL; prove that rule order changes the result",
+      "Configure port security with sticky MAC learning, then trip the violation",
+      "Enable DHCP snooping and identify which ports become trusted",
+      "For every attack in 4.2, write the one control that mitigates it — attack on one side, defence on the other",
+      "Second practice exam if you have one; otherwise a closed-book pass over your weeks 1–9 notes"
+    ],
+    why: ["Learn attacks and defences as pairs", "Messer covers 4.2 attacks and 4.3 defences separately, but the exam asks them as one question: here is a symptom, what stops it. Building the flashcards as attack/mitigation pairs matches how you'll be tested."]
+  },
+  {
+    n: 11, t: "Troubleshooting and tools", s: "12 videos · 1h 59m", d: [5],
+    watch: [
+      ["5.1", "Network Troubleshooting Methodology"],
+      ["5.2", "Cable Issues"],
+      ["5.2", "Interface Issues"],
+      ["5.2", "Hardware Issues"],
+      ["5.3", "Switching Issues"],
+      ["5.3", "Routing and IP Issues"],
+      ["5.4", "Performance Issues"],
+      ["5.4", "Wireless Issues"],
+      ["5.5", "Software Tools"],
+      ["5.5", "Command Line Tools"],
+      ["5.5", "Hardware Tools"],
+      ["5.5", "Basic Network Device Commands"]
+    ],
+    do: [
+      "Build one working multi-VLAN, multi-router Packet Tracer topology and save a clean copy",
+      "Break-and-fix ×6: wrong subnet mask, wrong VLAN, missing default gateway, duplicate IP, shutdown interface, wrong cable type",
+      "Diagnose each one using Messer's methodology out loud, in order, before touching anything",
+      "Run every 5.5 command line tool on your Linux VM: ping, traceroute, nslookup, dig, tcpdump, netstat, ip, arp",
+      "Map each symptom to the tool that finds it — that mapping is the whole domain",
+      "Third practice exam if available"
+    ],
+    why: ["The largest domain, and it lands last", "Domain 5.0 is 24% of the exam — the biggest single slice — but only about 15% of the course's video time, so watching alone will badly under-prepare you here. It's also the domain the performance-based questions draw on most heavily. The break-and-fix reps are the highest-value hours in this entire plan; don't shortcut them."]
+  },
+  {
+    n: 12, t: "Exam week", s: "No new videos", d: [1, 2, 3, 4, 5],
+    watch: [
+      ["—", "Re-watch only the videos on your wrong-answer list"],
+      ["1.7", "Whichever subnetting shortcut video you chose, one final time"],
+      ["5.1", "Network Troubleshooting Methodology — know these steps cold"],
+      ["0.1", "How to Pass Your N10-009 Network+ Exam — it lands differently now"]
+    ],
+    do: [
+      "Book the exam on day one of this week; an unscheduled exam drifts forever",
+      "Two timed 90-minute sessions under real conditions — no notes, no pausing",
+      "Ports deck to 100% recall, both directions",
+      "Subnetting: 30 problems in 15 minutes",
+      "Rebuild your week 11 topology from a blank canvas, once, from memory",
+      "Read CompTIA's exam-day requirements and confirm your ID and testing setup",
+      "Stop studying 12 hours before the exam. Sleep beats cramming."
+    ],
+    why: ["Consolidation only — no new material", "Nothing you learn in week 12 will make it to long-term memory in time. This week exists to convert what's shaky into what's automatic, and to make sure the exam is actually on the calendar."]
+  }
+];
+
+const DOMAIN_LABEL = { 1: "1.0", 2: "2.0", 3: "3.0", 4: "4.0", 5: "5.0" };
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+const host = document.getElementById("weeks");
+
+WEEKS.forEach(w => {
+  const total = w.watch.length + w.do.length;
+  const chips = w.d.map(d => `<span class="chip d${d}">${DOMAIN_LABEL[d]}</span>`).join("");
+
+  const watchItems = w.watch.map((v, i) => {
+    const id = `w${w.n}v${i}`;
+    const num = v[0] === "—" ? "" : `<span class="obj">${esc(v[0])}</span> `;
+    return `<li><input type="checkbox" id="${id}"><label for="${id}">${num}${esc(v[1])}</label></li>`;
+  }).join("");
+
+  const doItems = w.do.map((v, i) => {
+    const id = `w${w.n}d${i}`;
+    return `<li><input type="checkbox" id="${id}"><label for="${id}">${esc(v)}</label></li>`;
+  }).join("");
+
+  const el = document.createElement("details");
+  el.className = "week";
+  if (w.n === 1) el.open = true;
+  el.innerHTML =
+    `<summary>
+       <span class="wk-num">Week ${w.n}</span>
+       <span><span class="wk-title">${esc(w.t)}</span><span class="wk-sub">${esc(w.s)}</span></span>
+       <span class="wk-right"><span class="chips">${chips}</span><span class="wk-count" data-total="${total}">0/${total}</span></span>
+     </summary>
+     <div class="wk-body">
+       <div>
+         <div class="col-head">Watch</div>
+         <ul>${watchItems}</ul>
+       </div>
+       <div>
+         <div class="col-head">Do</div>
+         <ul>${doItems}</ul>
+       </div>
+       <p class="why"><b>${esc(w.why[0])}</b>${esc(w.why[1])}</p>
+     </div>`;
+  host.appendChild(el);
+});
+
+const KEY = "n10009.plan.v1";
+const boxes = Array.from(document.querySelectorAll('.wk-body input[type="checkbox"]'));
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) || {};
+  } catch (e) { return {}; }
+}
+
+function save(state) {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+}
+
+let state = load();
+
+function paint() {
+  let done = 0;
+  boxes.forEach(b => {
+    const lbl = document.querySelector(`label[for="${b.id}"]`);
+    if (lbl) lbl.classList.toggle("done", b.checked);
+    if (b.checked) done++;
+  });
+
+  document.querySelectorAll("details.week").forEach(d => {
+    const counter = d.querySelector(".wk-count");
+    const t = Number(counter.dataset.total);
+    const c = Array.from(d.querySelectorAll('input[type="checkbox"]')).filter(x => x.checked).length;
+    counter.textContent = `${c}/${t}`;
+  });
+
+  const pct = boxes.length ? Math.round((done / boxes.length) * 100) : 0;
+  document.getElementById("fill").style.width = pct + "%";
+  document.getElementById("pct").textContent = `${pct}% complete · ${done} of ${boxes.length}`;
+}
+
+boxes.forEach(b => {
+  if (state[b.id]) b.checked = true;
+  b.addEventListener("change", () => {
+    if (b.checked) state[b.id] = 1; else delete state[b.id];
+    save(state);
+    paint();
+  });
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  boxes.forEach(b => { b.checked = false; });
+  state = {};
+  save(state);
+  paint();
+});
+
+paint();
+</script>
